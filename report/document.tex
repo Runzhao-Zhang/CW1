@@ -1,13 +1,9 @@
-\documentclass[10pt]{article}
+\documentclass[conference]{IEEEtran}
 
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[colorlinks = true,
-linkcolor = blue,
-urlcolor  = blue]{hyperref}
-\usepackage[a4paper,top=2cm,bottom=3cm,left=2cm,right=2cm,headheight=-1mm]{geometry}
+\usepackage{hyperref}
 \usepackage{stackengine,graphicx}
-\usepackage{fancyhdr}
 \usepackage{microtype}
 \usepackage{times}
 \usepackage{booktabs}
@@ -15,9 +11,9 @@ urlcolor  = blue]{hyperref}
 \usepackage{xcolor}
 \usepackage{amsmath}
 \usepackage{longtable}
-\usepackage{float}
 \usepackage{placeins}
 \usepackage{amssymb}
+
 \definecolor{codebg}{rgb}{0.95,0.95,0.9}
 \lstdefinestyle{codestyle}{
 	basicstyle=\ttfamily\footnotesize,
@@ -36,32 +32,24 @@ urlcolor  = blue]{hyperref}
 	keepspaces=true,
 	captionpos=b,
 	numbers=left,
-	numbersep=5pt}
-\lstset{style=codestyle, linewidth=.97\textwidth, xleftmargin=.04\textwidth}
+	numbersep=5pt
+}
+\lstset{style=codestyle, linewidth=\linewidth, xleftmargin=0pt}
 
-\frenchspacing
-\setlength{\parindent}{0mm}
-\setlength{\parskip}{0pt}
+\title{Machine Learning for Computer Vision}
 
-\pagestyle{fancy}
-\fancyhf{}
-\lhead{CS485 Homework Writeup}
-\rhead{\thepage}
-
-\date{}
-
-\title{\vspace{-1cm}Machine Learning for computer vision}
 
 \begin{document}
 	\maketitle
-	\vspace{-2cm}
-	\thispagestyle{fancy}
+	
+
 	
 	\section*{Authors}
 	\begin{itemize}
 		\item Victorin Turnel
 		\item X
 	\end{itemize}
+	\vspace{0.5cm}
 	
 	\input{question1}
 	\clearpage
@@ -72,7 +60,5 @@ urlcolor  = blue]{hyperref}
 	\input{question4}
 	\clearpage
 	\input{question5}
-	\clearpage
-	\input{appendix}
 	
 \end{document}

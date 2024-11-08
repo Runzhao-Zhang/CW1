@@ -1,9 +1,9 @@
 \clearpage
-\rule{\textwidth}{1mm}
+
 \vspace{-2em}
 \section{Question 4} Generative and Discriminative Subspace Learning
 \newline
-\rule{\textwidth}{1mm}
+
 
 First, let's define the objective function. The aim of this function is to model a compromise between a generative model such as PCA and a discriminative model such as LDA.
 
@@ -21,8 +21,10 @@ In the same way, we can define the objective function in the case of LDA :
 $$ J_{LDA}(W) = \dfrac{W^TS_BW}{W^TS_WW} $$
 
 Finally, the final objective function can be written as :
-$$ J(W) = \alpha J_{PCA} + (1 - \alpha) J_{LDA} \Leftrightarrow \alpha \frac{1}{N} \sum_{n = 1}^{N}{\lVert W^T(x_n - \mu) \rVert^2} + (1 - \alpha) \dfrac{W^TS_BW}{W^TS_WW}  $$
-
+\begin{align*}
+	J(W) &= \alpha J_{PCA} + (1 - \alpha) J_{LDA} \\
+	&= \alpha \frac{1}{N} \sum_{n = 1}^{N} \lVert W^T(x_n - \mu) \rVert^2 + (1 - \alpha) \frac{W^T S_B W}{W^T S_W W}
+\end{align*}
 
 \begin{itemize}
 	\item $S_B \in \mathbb{R}^{m \times m}$ is the between-class scatter
@@ -43,7 +45,12 @@ The optimisation problem is : $$max_W \ J(W)$$
 
 To facilitate optimisation, we can impose a constraint. In our case, we can impose the constraint $W^TW = 1$ since this matrix contains the unit and orthogonal eigenvectors. So, the multiplication of two vectors is either 1 if the vectors are identical (they are unitary, so their norm is 1) or 0 if they are different (since they are orthogonal).
 
-$$\mathcal{L}(W,A) = \alpha \ trace(W^TS_TW) + (1 - \alpha) \dfrac{W^TS_BW}{W^TS_WW} - trace(A(W^TW - I))$$
+
+\begin{align*}
+	\mathcal{L}(W,A) &= \alpha \, \text{trace}(W^T S_T W) + (1 - \alpha) \dfrac{W^T S_B W}{W^T S_W W} \\
+	& \quad - \text{trace}(A(W^T W - I))
+\end{align*}
+
 
 where $A$ is a matrix of Lagrange multipliers.
 

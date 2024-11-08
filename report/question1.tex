@@ -1,8 +1,8 @@
-\rule{\textwidth}{1mm}
+
 \vspace{-2em}
 \section{Question 1} Eigenfaces and Application of Eigenfaces
 \newline
-\rule{\textwidth}{1mm}
+
 
 \subsection{Eigenfaces}
 After applying a BCP, we can observe the following elements
@@ -29,22 +29,21 @@ In this section, we look at the number of vectors we need to keep in order to ma
 After following the same process, but this time with the ATA covariance matrix, we see that the eigenvalues and vectors are the same. However, there are a few differences :
 
 
-\begin{longtable}{|l|p{7cm}|p{3cm}|p{3cm}|}
-	\hline
-	\textbf{Matrix} & \textbf{Interpretation} & \textbf{Pros} & \textbf{Cons} \\
-	\hline
-	\endfirsthead
-	
-	\hline
-	\endfoot
-	
-	\hline
-	\endlastfoot
-	
-	AAT & This matrix captures the relationships between pixels across all images, giving a rich representation of covariance in pixel space. & Direct interpretation in pixel space and gives eigenfaces directly & High computational cost for large \( d = W \times H \) \\
-	\hline
-	ATA & This matrix captures the covariance between images themselves, rather than between pixels. It is therefore more compact when the number of images is less than the number of pixels, as is the case here. & Faster and less expensive calculation when \( N < d \) (where \( N \) is the number of images and \( d = W \times H \)). Smaller covariance space & An additional step is required to obtain the eigenfaces by projecting the eigenvectors of ATA into pixel space. \\
-\end{longtable}
+\begin{table*}[ht]
+	\centering
+	\begin{tabular}{|l|p{7cm}|p{3cm}|p{3cm}|}
+		\hline
+		\textbf{Matrix} & \textbf{Interpretation} & \textbf{Pros} & \textbf{Cons} \\
+		\hline
+		AAT & This matrix captures the relationships between pixels across all images, giving a rich representation of covariance in pixel space. & Direct interpretation in pixel space and gives eigenfaces directly & High computational cost for large \( d = W \times H \) \\
+		\hline
+		ATA & This matrix captures the covariance between images themselves, rather than between pixels. It is therefore more compact when the number of images is less than the number of pixels, as is the case here. & Faster and less expensive calculation when \( N < d \) (where \( N \) is the number of images and \( d = W \times H \)). Smaller covariance space & An additional step is required to obtain the eigenfaces by projecting the eigenvectors of ATA into pixel space. \\
+		\hline
+	\end{tabular}
+	\caption{Pros and cons for the choice of convariance matrix}
+	\label{table:matrix_interpretation}
+\end{table*}
+
 
 \subsection{Eigenfaces}
 
@@ -54,7 +53,7 @@ The theory is that the reconstruction is better with a larger number of eigenvec
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=12.0cm]{./Ressources/Reconstruction_error.png}
+	\includegraphics[width=8.0cm]{./Ressources/Reconstruction_error.png}
 	\vspace{-3mm}
 	\caption{Reconstruction error versus the number of eigenvectors selected}
 	\label{fig:rect_result}
@@ -63,6 +62,8 @@ The theory is that the reconstruction is better with a larger number of eigenvec
 The above comments also apply to images from the test dataset. This time there is also more noise in the reconstruction, which appears to be less effective. This is because the eigenvectors used for projection and reconstruction are not calculated from these images but from similar images. This is why the result remains correct but appears noisy and has a bigger error.
 
 \subsection{PCA-based face recognition}
+
+
 
 
 
