@@ -1,0 +1,68 @@
+\rule{\textwidth}{1mm}
+\vspace{-2em}
+\section{Question 1} Eigenfaces and Application of Eigenfaces
+\newline
+\rule{\textwidth}{1mm}
+
+\subsection{Eigenfaces}
+After applying a BCP, we can observe the following elements
+\subsubsection{Mean image}
+
+The average image represents the average of all the training images and serves as a reference for centring the data. This image is obtained by averaging each pixel across all the training images. It provides a kind of ‘blurred portrait’ that captures the average facial features, which can reveal common facial characteristics in the dataset. By removing these characteristics common to all portraits, we retain only the details that allow us to differentiate between faces.
+
+\subsubsection{Eigenvectors and eigenvalues analysis}
+
+In our situation, an eigenvalue is considered to be non-zero if it is greater than $10^{-3}$. Calculating the number of non-zero eigenvalues gives 415. This is consistent since the covariance matrix is of rank N-1 with N = 416 the number of images in the data. The rank corresponding to the number of non-zero eigenvalues is therefore relevant. The rank of the matrix is N-1 because there are N images but a dependency is created between the columns during normalisation.
+\newline
+
+Looking at the non-zero eigenvalues, we can see that some vectors have much higher eigenvalues than others. This means that these vectors carry more information. In other words, the direction of these vectors expresses the most information since the eigenvalues represents the norm of the vector. So the projection must be in this direction to maximise the amount of information.
+\newline
+
+The eigenvectors of the covariance matrix represent orthogonal directions in image space, oriented according to the characteristic features of the faces. Each of these vectors (or eigenface) can be interpreted as a ‘fundamental feature’ or ‘basic component’ for differentiating faces. The first eigenfaces capture the general characteristics (such as the shape of the face or the dark areas for the eyes or mouth), while the subsequent ones detail more subtle variations.
+
+\subsubsection{Eigenvectors use for face recognition}
+
+In this section, we look at the number of vectors we need to keep in order to maintain 95\% of the variance in our projection. To do this, we calculate the cumulative eigenvalues ordered in descending order. Then divide by the sum of the eigenvalues to obtain the ratio of variance explained by the first M vectors. We then look for M such that this ratio is greater than 95\%. In our case, M = 165 to explain 95\% of the variance.
+
+\subsubsection{Change of covariance matrix}
+
+After following the same process, but this time with the ATA covariance matrix, we see that the eigenvalues and vectors are the same. However, there are a few differences :
+
+
+\begin{longtable}{|l|p{7cm}|p{3cm}|p{3cm}|}
+	\hline
+	\textbf{Matrix} & \textbf{Interpretation} & \textbf{Pros} & \textbf{Cons} \\
+	\hline
+	\endfirsthead
+	
+	\hline
+	\endfoot
+	
+	\hline
+	\endlastfoot
+	
+	AAT & This matrix captures the relationships between pixels across all images, giving a rich representation of covariance in pixel space. & Direct interpretation in pixel space and gives eigenfaces directly & High computational cost for large \( d = W \times H \) \\
+	\hline
+	ATA & This matrix captures the covariance between images themselves, rather than between pixels. It is therefore more compact when the number of images is less than the number of pixels, as is the case here. & Faster and less expensive calculation when \( N < d \) (where \( N \) is the number of images and \( d = W \times H \)). Smaller covariance space & An additional step is required to obtain the eigenfaces by projecting the eigenvectors of ATA into pixel space. \\
+\end{longtable}
+
+\subsection{Eigenfaces}
+
+\subsection{Reconstruction}
+
+The theory is that the reconstruction is better with a larger number of eigenvectors. This is because the smaller the projection space, the more information is lost when we return to the original space with a larger dimension. This is confirmed in our case. Firstly, a visual analysis shows that for a low number of vectors, the faces are closer to the average face and are completely smooth. On the contrary, as the number of vectors increases, the faces become more detailed as the information is retained. Secondly, we propose to calculate the error matrix. Each line represents an image, and the further to the right you move the higher the number of vectors. This error is calculated in the sense of the MSE. When plotted on a graph, we can see that it decreases as the number of vectors increases. Note that the error decay is much greater when the first vectors are added, as they represent the most information (they are ranked in descending order according to their eigenvalues). On the other hand, the error stabilises for a large number of vectors because they explain less of the variance in the information (low eigenvalues).
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=12.0cm]{./Ressources/Reconstruction_error.png}
+	\vspace{-3mm}
+	\caption{Reconstruction error versus the number of eigenvectors selected}
+	\label{fig:rect_result}
+\end{figure}
+
+The above comments also apply to images from the test dataset. This time there is also more noise in the reconstruction, which appears to be less effective. This is because the eigenvectors used for projection and reconstruction are not calculated from these images but from similar images. This is why the result remains correct but appears noisy and has a bigger error.
+
+\subsection{PCA-based face recognition}
+
+
+

@@ -1,0 +1,77 @@
+\documentclass[10pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorlinks = true,
+linkcolor = blue,
+urlcolor  = blue]{hyperref}
+\usepackage[a4paper,top=2cm,bottom=3cm,left=2cm,right=2cm,headheight=-1mm]{geometry}
+\usepackage{stackengine,graphicx}
+\usepackage{fancyhdr}
+\usepackage{microtype}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{longtable}
+\usepackage{placeins}
+\usepackage{amssymb}
+\definecolor{codebg}{rgb}{0.95,0.95,0.9}
+\lstdefinestyle{codestyle}{
+	basicstyle=\ttfamily\footnotesize,
+	frame=single,
+	backgroundcolor=\color{codebg},
+	keywordstyle=\bfseries\color{magenta},
+	commentstyle=\itshape\color{gray},
+	stringstyle=\color{orange},
+	numberstyle=\sffamily\scriptsize\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=4,
+	breakatwhitespace=false,
+	breaklines=true,
+	keepspaces=true,
+	captionpos=b,
+	numbers=left,
+	numbersep=5pt}
+\lstset{style=codestyle, linewidth=.97\textwidth, xleftmargin=.04\textwidth}
+
+\frenchspacing
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{0pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CS485 Homework Writeup}
+\rhead{\thepage}
+
+\date{}
+
+\title{\vspace{-1cm}Machine Learning for computer vision}
+
+\begin{document}
+	\maketitle
+	\vspace{-2cm}
+	\thispagestyle{fancy}
+	
+	\section*{Authors}
+	\begin{itemize}
+		\item Victorin Turnel
+		\item X
+	\end{itemize}
+	
+	\input{question1}
+	\clearpage
+	\input{question2}
+	\clearpage
+	\input{question3}
+	\clearpage
+	\input{question4}
+	\clearpage
+	\input{question5}
+	\clearpage
+	\input{appendix}
+	
+\end{document}

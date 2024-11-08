@@ -1,0 +1,73 @@
+\clearpage
+\rule{\textwidth}{1mm}
+\vspace{-2em}
+\section{Question 4} Generative and Discriminative Subspace Learning
+\newline
+\rule{\textwidth}{1mm}
+
+First, let's define the objective function. The aim of this function is to model a compromise between a generative model such as PCA and a discriminative model such as LDA.
+
+To define this function, we first look at the objective function associated with the PCA : 
+$$ J_{PCA} = \frac{1}{N} \sum_{n = 1}^{N} {\lVert x_n - \tilde{x}_n \rVert ^2} = \frac{1}{N} \sum_{n = 1}^{N}{\lVert x_n - WW^TX_n \rVert^2} $$ 
+The aim is to minimise the reconstruction error.  The associated problem can therefore be written as : 
+$$ min_W\ \ J_{PCA}(W) $$
+
+We can also define the problem in the equivalent form of maximising the projected variance:
+$$ J_{PCA}(W) =  \frac{1}{N} \sum_{n = 1}^{N}{\lVert W^T(x_n - \mu) \rVert^2} $$
+The problem then becomes : 
+$$ max_W\ \ J_{PCA}(W) $$
+
+In the same way, we can define the objective function in the case of LDA :
+$$ J_{LDA}(W) = \dfrac{W^TS_BW}{W^TS_WW} $$
+
+Finally, the final objective function can be written as :
+$$ J(W) = \alpha J_{PCA} + (1 - \alpha) J_{LDA} \Leftrightarrow \alpha \frac{1}{N} \sum_{n = 1}^{N}{\lVert W^T(x_n - \mu) \rVert^2} + (1 - \alpha) \dfrac{W^TS_BW}{W^TS_WW}  $$
+
+
+\begin{itemize}
+	\item $S_B \in \mathbb{R}^{m \times m}$ is the between-class scatter
+	\item $S_W \in \mathbb{R}^{m \times m}$ is the within-class scatter
+	\item $\alpha$ is the balancing parameter between 0 and 1 that controls the trade-off between discrimination (0) and reconstruction (1)
+	\item $x_n \in \mathbb{R}^{m}$ the nth data vector
+	\item W $\in \mathbb{R}^{m \times k}$  where k is the number of eigenvectors
+	\item $\mu \in \mathbb{R}^{m}$ vector of the mean of the data  $\mu = \frac{1}{N} \sum_{n = 1}^{N} x_n $ 
+\end{itemize}
+
+\subsection{Formulation of the optimisation problem}
+
+We can rewrite the objective function in another form because we know that $ \frac{1}{N} \sum_{n = 1}^{N}{\lVert W^T(x_n - \mu) \rVert^2} = trace(W^TS_TW) $ with $S_T$ the total scatter: $$ J(W) = \alpha \ trace(W^TS_TW) + (1 - \alpha) \dfrac{W^TS_BW}{W^TS_WW}  $$
+
+The optimisation problem is : $$max_W \ J(W)$$
+
+\subsection{Reformulating the problem with a Lagrangian}
+
+To facilitate optimisation, we can impose a constraint. In our case, we can impose the constraint $W^TW = 1$ since this matrix contains the unit and orthogonal eigenvectors. So, the multiplication of two vectors is either 1 if the vectors are identical (they are unitary, so their norm is 1) or 0 if they are different (since they are orthogonal).
+
+$$\mathcal{L}(W,A) = \alpha \ trace(W^TS_TW) + (1 - \alpha) \dfrac{W^TS_BW}{W^TS_WW} - trace(A(W^TW - I))$$
+
+where $A$ is a matrix of Lagrange multipliers.
+
+\subsection{Solving the problem using the gradient}
+
+To obtain the optimum value for W, we calculate the gradient of $\mathcal{L}(W,A)$ with respect to W. Then we solve the equation in which the gradient is equal to 0.
+\newline 
+
+$\nabla_W (\alpha \ trace(W^TS_TW)) = 2\alpha S_T W$
+
+$\nabla_W ((1 - \alpha) \dfrac{W^TS_BW}{W^TS_WW}) = (1 - \alpha) \times (\frac{2S_BW}{W^TS_WW} - \frac{2S_WW \times (W^TS_BW)}{(W^TS_WW)^2}) $
+
+$\nabla_W (- trace(A(W^TW - I))) = -2AW $
+\newline
+
+When we put the terms together and solve the equation $\nabla_WJ(W) = 0$, we get : 
+$$\alpha S_T W + (1 - \alpha) \times (\frac{S_BW}{W^TS_WW} - \frac{S_WW \times (W^TS_BW)}{(W^TS_WW)^2}) = AW$$
+
+\subsection{Using generalized eigenvector-eigenvalues}
+
+This gives us an equation of the form : $BW = AW$ avec $B = \alpha S_T + \times (\frac{S_B}{W^TS_WW} - \frac{S_W \times (W^TS_BW)}{(W^TS_WW)^2})$ we then need to find the generalized eigenvector of the matrix B with the constraint $W^TW = 1$
+
+\begin{enumerate}
+	\item The covariance matrices $S_B, S_W, S_T$ are calculated from the training data.
+	\item B is calculated (using iterative optimisation, for example). We then look for the generalised eigenvector and corresponding generalised eigenvalues
+	\item The eigenvectors associated with the largest eigenvalues are retained. These vectors will then be the columns of W.
+\end{enumerate}
