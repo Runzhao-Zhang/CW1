@@ -25,7 +25,7 @@ In this section, we look at the number of vectors we need to keep in order to ma
 
 \subsubsection{Change of covariance matrix}
 
-After following the same process, but this time with the ATA covariance matrix, we see that the eigenvalues and vectors are the same. However, there are a few differences :
+After following the same process, but this time with the ATA covariance matrix, we see that the eigenvalues and vectors are the same. However, there are a few differences that we can notice in table 1
 
 
 \begin{table*}[ht]
@@ -44,9 +44,9 @@ After following the same process, but this time with the ATA covariance matrix, 
 \end{table*}
 
 
-\subsection{Eigenfaces}
+\subsection{Application of Eigenfaces}
 
-\subsection{Reconstruction}
+\subsubsection{Reconstruction}
 
 The theory is that the reconstruction is better with a larger number of eigenvectors. This is because the smaller the projection space, the more information is lost when we return to the original space with a larger dimension. This is confirmed in our case. Firstly, a visual analysis shows that for a low number of vectors, the faces are closer to the average face and are completely smooth. On the contrary, as the number of vectors increases, the faces become more detailed as the information is retained. Secondly, we propose to calculate the error matrix. Each line represents an image, and the further to the right you move the higher the number of vectors. This error is calculated in the sense of the MSE. When plotted on a graph, we can see that it decreases as the number of vectors increases. Note that the error decay is much greater when the first vectors are added, as they represent the most information (they are ranked in descending order according to their eigenvalues). On the other hand, the error stabilises for a large number of vectors because they explain less of the variance in the information (low eigenvalues).
 
@@ -61,6 +61,19 @@ The theory is that the reconstruction is better with a larger number of eigenvec
 The above comments also apply to images from the test dataset. This time there is also more noise in the reconstruction, which appears to be less effective. This is because the eigenvectors used for projection and reconstruction are not calculated from these images but from similar images. This is why the result remains correct but appears noisy and has a bigger error.
 
 \subsection{PCA-based face recognition}
+
+To perform face recognition, a PCA is applied to the training data. We then obtain the mean vector associated with the data and the projection matrix. We then project the training data and the test data with this same projection matrix. A NN classifier is trained on the projected training data and its labels. The prediction is then made on the projected test data.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=8.0cm]{./Ressources/matrix_neighbors_eigenvectors.png}
+	\includegraphics[width=8.0cm]{./Ressources/accuracy_1neighbors.png}
+	\vspace{-3mm}
+	\caption{Reconstruction error versus the number of eigenvectors selected}
+	\label{fig:rect_result}
+\end{figure}
+
+From the parameter analysis we can see that the best results are obtained with nb_neighbors = 1 for the NN classifier and that the higher the number of components, the better the classification.
 
 
 
