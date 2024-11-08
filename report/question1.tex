@@ -76,12 +76,12 @@ The above comments also apply to images from the test dataset. This time there i
 
 To perform face recognition, a PCA is applied to the training data. We then obtain the mean vector associated with the data and the projection matrix. We then project the training data and the test data with this same projection matrix. A NN classifier is trained on the projected training data and its labels. The prediction is then made on the projected test data.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=8.0cm]{./Ressources/matrix_neighbors_eigenvectors.png}
-	\caption{Reconstruction error with different neighbors}
-	\label{fig:knn_num}
-\end{figure}
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=8.0cm]{./Ressources/matrix_neighbors_eigenvectors.png}
+%	\caption{Reconstruction error with different neighbors}
+%	\label{fig:knn_num}
+%\end{figure}
 
 \begin{figure}[h]
 	\centering
@@ -89,7 +89,9 @@ To perform face recognition, a PCA is applied to the training data. We then obta
 	\caption{Reconstruction error with different components}
 	\label{fig:n_num}
 \end{figure}
-From the Figure~\ref{fig:knn_num} and Figure~\ref{fig:n_num}we can see that the best results are obtained with nb\_neighbors = 1 for the NN classifier and that the higher the number of components, the better the classification.
+We calculated the accuracy at different values of neighbors and finally found that the accuracy at n\_neighbors=1 is significantly higher than other values.
+
+Then, from the Figure~\ref{fig:n_num} we can see that the best results are obtained with n\_neighbors = 1 for the NN classifier and that the higher the number of components, the better the classification.
 
 \begin{figure}[h]
 	\centering
@@ -97,6 +99,7 @@ From the Figure~\ref{fig:knn_num} and Figure~\ref{fig:n_num}we can see that the 
 	\caption{Confusion Matrix}
 	\label{fig:Q1_cm}
 \end{figure}
+And the Figure~\ref{fig:Q1_cm} shows that the classification effect of the model is not very good, because there are some dark points located outside the diagonal (that is, prediction errors).
 
 
 
